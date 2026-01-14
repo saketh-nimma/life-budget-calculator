@@ -104,3 +104,25 @@ button {
 button:hover {
   background: #1e40af;
 }
+
+/* === Chart Layout Fix === */
+
+.charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.chart-card {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 16px;
+  height: 420px; /* KEY */
+}
+
+.chart-card canvas {
+  width: 100% !important;
+  height: 320px !important; /* KEY */
+}
+
