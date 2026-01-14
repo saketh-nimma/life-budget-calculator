@@ -1,7 +1,13 @@
-let chart;
+let lineChart, pieChart;
+let mode = "savings";
 
 const sliders = document.querySelectorAll("input[type=range]");
-sliders.forEach(slider => slider.addEventListener("input", update));
+sliders.forEach(s => s.addEventListener("input", update));
+
+function setMode(m) {
+  mode = m;
+  update();
+}
 
 function update() {
   const income = +incomeSlider.value;
@@ -20,54 +26,106 @@ function update() {
   const savings = income * savingsRate;
   const leftover = income - expenses - savings;
 
-  const health =
-    leftover > 500 ? "🟢 Excellent" :
-    leftover > 0 ? "🟡 Stable" :
-    "🔴 Risky";
-
-  summary.innerHTML = `
-    Monthly Expenses: $${expenses}<br>
-    Monthly Savings: $${savings.toFixed(0)}<br>
-    Leftover Cash: $${leftover.toFixed(0)}<br>
-    Financial Health: <strong>${health}</strong>
-  `;
-
-  buildChart(savings);
+  updateWarning(leftover);
+  updateSummary(income, expenses, savings, leftover);
+  buildLineChart(savings, leftover);
+  buildPieChart(rent, food, transport, savings);
 }
 
-function buildChart(monthlySavings) {
+function updateWarning(leftover) {
+  const warning = document.getElementById("warning");
+
+  if (leftover < 0) {
+    warning.style.background = "#fee2e2";
+    warning.textContent = "⚠️ You are spending more than you earn.";
+  } else if (leftover < 300) {
+    warning.style.background = "#fef3c7";
+    warning.textContent = "⚠️ Very little buffer for emergencies.";
+  } else {
+    warning.style.background = "#dcfce7";
+    warning.textContent = "✅ Healthy monthly cash flow.";
+  }
+}
+
+function updateSummary(income, expenses, savings, leftover) {
+  summary.innerHTML = `
+    Income: $${income}<br>
+    Expenses: $${expenses}<br>
+    Savings: $${savings.toFixed(0)}<br>
+    Remaining Cash: $${leftover.toFixed(0)}
+  `;
+}
+
+function buildLineChart(monthlySavings, leftover) {
   const years = Array.from({ length: 10 }, (_, i) => i + 1);
   let total = 0;
-  const savingsData = years.map(() => {
-    total += monthlySavings * 12;
+
+  const data = years.map(() => {
+    total += mode === "savings"
+      ? monthlySavings * 12
+      : (monthlySavings * 12) + (leftover * 12);
     return total;
   });
 
-  if (chart) chart.destroy();
+  if (lineChart) lineChart.destroy();
 
-  chart = new Chart(document.getElementById("budgetChart"), {
+  lineChart = new Chart(budgetChart, {
     type: "line",
     data: {
       labels: years,
       datasets: [{
-        label: "Total Savings Over Time",
-        data: savingsData,
+        label: mode === "savings" ? "Total Savings ($)" : "Net Worth ($)",
+        data: data,
         borderColor: "#16a34a",
         backgroundColor: "#16a34a33",
         fill: true,
-        tension: 0.3,
+        tension: 0.35,
         borderWidth: 3
       }]
     },
     options: {
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: ctx =>
+              `$${ctx.raw.toLocaleString()} after ${ctx.label} years`
+          }
+        }
+      },
       scales: {
-        y: { beginAtZero: true }
+        x: { title: { display: true, text: "Years" } },
+        y: { title: { display: true, text: "Total Dollars ($)" } }
       }
     }
   });
 }
 
-// Element references
+function buildPieChart(rent, food, transport, savings) {
+  if (pieChart) pieChart.destroy();
+
+  pieChart = new Chart(expenseChart, {
+    type: "doughnut",
+    data: {
+      labels: ["Rent", "Food", "Transport", "Savings"],
+      datasets: [{
+        data: [rent, food, transport, savings],
+        backgroundColor: [
+          "#ef4444",
+          "#f59e0b",
+          "#3b82f6",
+          "#16a34a"
+        ]
+      }]
+    },
+    options: {
+      plugins: {
+        legend: { position: "bottom" }
+      }
+    }
+  });
+}
+
+// DOM references
 const incomeSlider = document.getElementById("income");
 const rentSlider = document.getElementById("rent");
 const foodSlider = document.getElementById("food");
