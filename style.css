@@ -60,3 +60,35 @@ input[type=range] {
   border-radius: 16px;
   color: #1e3a8a;
 }
+.chart-controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.chart-controls button {
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.warning {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
