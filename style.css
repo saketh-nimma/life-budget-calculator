@@ -1,0 +1,62 @@
+body {
+  background: linear-gradient(135deg, #eef2ff, #e0f2fe);
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+h1 {
+  text-align: center;
+  color: #1e3a8a;
+  font-size: 2.5rem;
+}
+
+p {
+  text-align: center;
+  color: #374151;
+  font-size: 1.1rem;
+}
+
+.inputs label {
+  display: block;
+  margin-top: 18px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+input[type=range] {
+  width: 100%;
+  margin-top: 8px;
+  accent-color: #2563eb;
+}
+
+.results {
+  margin-top: 30px;
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+  padding: 25px;
+  border-radius: 16px;
+  font-size: 1.05rem;
+}
+
+#budgetChart {
+  margin-top: 35px;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 16px;
+}
+
+.about {
+  margin-top: 35px;
+  background: #e0f2fe;
+  padding: 25px;
+  border-radius: 16px;
+  color: #1e3a8a;
+}
