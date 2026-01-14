@@ -35,7 +35,18 @@
     <div id="summary"></div>
   </div>
 
+  <div class="chart-controls">
+  <button onclick="setMode('savings')">📈 Savings Growth</button>
+  <button onclick="setMode('networth')">💼 Net Worth</button>
+</div>
+
+<div class="charts">
   <canvas id="budgetChart"></canvas>
+  <canvas id="expenseChart"></canvas>
+</div>
+
+<div id="warning" class="warning"></div>
+
 
   <div class="about">
     <h3>How It Works</h3>
