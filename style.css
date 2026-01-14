@@ -3,6 +3,9 @@ body {
   font-family: system-ui, sans-serif;
   margin: 0;
 }
+html, body {
+  overflow-x: hidden;
+}
 
 .container {
   max-width: 1000px;
@@ -78,6 +81,25 @@ button {
   border-radius: 12px;
   cursor: pointer;
 }
+.charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.chart-card {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.chart-card canvas {
+  max-width: 100%;
+  height: auto;
+}
+
 
 button:hover {
   background: #1e40af;
