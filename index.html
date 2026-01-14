@@ -7,34 +7,54 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
-<div class="container">
 
+<div class="container">
   <h1>💼 Personal Finance Simulator</h1>
-  <p class="subtitle">Adjust your financial decisions and instantly see long-term outcomes.</p>
+  <p class="subtitle">Adjust your finances and see your long-term projections instantly.</p>
 
   <div class="inputs">
-    <label>Monthly Income ($): <span id="incomeVal"></span></label>
-    <input type="range" id="income" min="1000" max="12000" value="4500">
+    <div class="input-group">
+      <label>Monthly Income ($): <span id="incomeVal"></span></label>
+      <input type="range" id="income" min="1000" max="12000" value="4500">
+      <input type="number" id="incomeNum" min="1000" max="12000" value="4500">
+    </div>
 
-    <label>Housing ($): <span id="rentVal"></span></label>
-    <input type="range" id="rent" min="300" max="5000" value="1500">
+    <div class="input-group">
+      <label>Housing ($): <span id="rentVal"></span></label>
+      <input type="range" id="rent" min="300" max="5000" value="1500">
+      <input type="number" id="rentNum" min="300" max="5000" value="1500">
+    </div>
 
-    <label>Food ($): <span id="foodVal"></span></label>
-    <input type="range" id="food" min="100" max="2000" value="500">
+    <div class="input-group">
+      <label>Food ($): <span id="foodVal"></span></label>
+      <input type="range" id="food" min="100" max="2000" value="500">
+      <input type="number" id="foodNum" min="100" max="2000" value="500">
+    </div>
 
-    <label>Transportation ($): <span id="transportVal"></span></label>
-    <input type="range" id="transport" min="0" max="2000" value="300">
+    <div class="input-group">
+      <label>Transportation ($): <span id="transportVal"></span></label>
+      <input type="range" id="transport" min="0" max="2000" value="300">
+      <input type="number" id="transportNum" min="0" max="2000" value="300">
+    </div>
 
-    <label>Savings Rate (%): <span id="saveVal"></span></label>
-    <input type="range" id="savings" min="0" max="50" value="15">
+    <div class="input-group">
+      <label>Savings Rate (%): <span id="saveVal"></span></label>
+      <input type="range" id="savings" min="0" max="50" value="15">
+      <input type="number" id="savingsNum" min="0" max="50" value="15">
+    </div>
 
-    <label>Investment Return (%): <span id="returnVal"></span></label>
-    <input type="range" id="return" min="0" max="12" value="7">
+    <div class="input-group">
+      <label>Investment Return (%): <span id="returnVal"></span></label>
+      <input type="range" id="return" min="0" max="12" value="7">
+      <input type="number" id="returnNum" min="0" max="12" value="7">
+    </div>
 
-    <label>Inflation (%): <span id="inflationVal"></span></label>
-    <input type="range" id="inflation" min="0" max="6" value="2">
+    <div class="input-group">
+      <label>Inflation (%): <span id="inflationVal"></span></label>
+      <input type="range" id="inflation" min="0" max="6" value="2">
+      <input type="number" id="inflationNum" min="0" max="6" value="2">
+    </div>
   </div>
 
   <div class="dashboard">
@@ -63,7 +83,6 @@
   <div class="export">
     <button onclick="downloadPlan()">⬇️ Download Financial Plan</button>
   </div>
-
 </div>
 
 <script src="script.js"></script>
