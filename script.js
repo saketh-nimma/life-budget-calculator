@@ -1,7 +1,32 @@
 let netChart, allocationChart, projectionData = [];
 
-const sliders = document.querySelectorAll("input[type=range]");
-sliders.forEach(slider => slider.addEventListener("input", update));
+const incomeEl = document.getElementById("income");
+const rentEl = document.getElementById("rent");
+const foodEl = document.getElementById("food");
+const transportEl = document.getElementById("transport");
+const savingsEl = document.getElementById("savings");
+const returnEl = document.getElementById("return");
+const inflationEl = document.getElementById("inflation");
+
+const incomeVal = document.getElementById("incomeVal");
+const rentVal = document.getElementById("rentVal");
+const foodVal = document.getElementById("foodVal");
+const transportVal = document.getElementById("transportVal");
+const saveVal = document.getElementById("saveVal");
+const returnVal = document.getElementById("returnVal");
+const inflationVal = document.getElementById("inflationVal");
+
+const healthCard = document.getElementById("healthCard");
+const emergencyCard = document.getElementById("emergencyCard");
+const summaryCard = document.getElementById("summaryCard");
+const insightText = document.getElementById("insightText");
+
+const netWorthChart = document.getElementById("netWorthChart");
+const allocationChartCanvas = document.getElementById("allocationChart");
+
+// --- Event Listeners ---
+[incomeEl, rentEl, foodEl, transportEl, savingsEl, returnEl, inflationEl]
+  .forEach(slider => slider.addEventListener("input", update));
 
 function update() {
   const income = +incomeEl.value;
@@ -32,6 +57,7 @@ function update() {
   generateInsight(income, expenses, savings);
 }
 
+// --- Dashboard Functions ---
 function updateHealth(leftover) {
   const score = Math.max(0, Math.min(100, 50 + leftover / 10));
   healthCard.style.background =
@@ -59,6 +85,7 @@ function updateSummary(income, expenses, savings, leftover) {
   `;
 }
 
+// --- Chart Functions ---
 function buildNetWorthChart(monthlySavings, r, inflation) {
   let total = 0;
   projectionData = [];
@@ -87,22 +114,18 @@ function buildNetWorthChart(monthlySavings, r, inflation) {
       }]
     },
     options: {
-      plugins: {
-        tooltip: {
-          callbacks: {
-            label: ctx => `$${ctx.parsed.y.toLocaleString()}`
-          }
-        }
-      },
+      responsive: true,
+      maintainAspectRatio: false,
       scales: {
         x: { title: { display: true, text: "Years" } },
         y: { title: { display: true, text: "Dollars ($)" } }
+      },
+      plugins: {
+        tooltip: {
+          callbacks: { label: ctx => `$${ctx.parsed.y.toLocaleString()}` }
+        }
       }
     }
-    options: {
-  responsive: true,
-  maintainAspectRatio: false
-}
   });
 }
 
@@ -117,14 +140,20 @@ function buildAllocationChart(rent, food, transport, savings) {
         data: [rent, food, transport, savings],
         backgroundColor: ["#ef4444", "#f59e0b", "#3b82f6", "#16a34a"]
       }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom" } }
     }
   });
 }
 
+// --- Insights ---
 function generateInsight(income, expenses, savings) {
   if (expenses > income * 0.6) {
     insightText.textContent =
-      "High fixed expenses are limiting growth. Reducing housing costs has the greatest long-term impact.";
+      "High fixed expenses are limiting growth. Reducing housing has the biggest impact.";
   } else if (savings < income * 0.1) {
     insightText.textContent =
       "Increasing savings by just 5% dramatically accelerates long-term wealth due to compounding.";
@@ -134,6 +163,7 @@ function generateInsight(income, expenses, savings) {
   }
 }
 
+// --- Download JSON ---
 function downloadPlan() {
   const plan = {
     income: incomeEl.value,
@@ -153,29 +183,5 @@ function downloadPlan() {
   link.click();
 }
 
-// DOM references
-const incomeEl = document.getElementById("income");
-const rentEl = document.getElementById("rent");
-const foodEl = document.getElementById("food");
-const transportEl = document.getElementById("transport");
-const savingsEl = document.getElementById("savings");
-const returnEl = document.getElementById("return");
-const inflationEl = document.getElementById("inflation");
-
-const incomeVal = document.getElementById("incomeVal");
-const rentVal = document.getElementById("rentVal");
-const foodVal = document.getElementById("foodVal");
-const transportVal = document.getElementById("transportVal");
-const saveVal = document.getElementById("saveVal");
-const returnVal = document.getElementById("returnVal");
-const inflationVal = document.getElementById("inflationVal");
-
-const healthCard = document.getElementById("healthCard");
-const emergencyCard = document.getElementById("emergencyCard");
-const summaryCard = document.getElementById("summaryCard");
-const insightText = document.getElementById("insightText");
-
-const netWorthChart = document.getElementById("netWorthChart");
-const allocationChartCanvas = document.getElementById("allocationChart");
-
+// --- Initialize ---
 update();
