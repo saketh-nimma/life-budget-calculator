@@ -11,75 +11,80 @@
 
 <div class="container">
   <h1>💼 Personal Finance Simulator</h1>
-  <p class="subtitle">Adjust your finances and see your long-term projections instantly.</p>
+  <p class="subtitle">Adjust your finances and compare multiple scenarios in real-time.</p>
 
+  <!-- Input Sliders -->
   <div class="inputs">
     <div class="input-group">
       <label>Monthly Income ($): <span id="incomeVal"></span></label>
       <input type="range" id="income" min="1000" max="12000" value="4500">
       <input type="number" id="incomeNum" min="1000" max="12000" value="4500">
     </div>
-
     <div class="input-group">
       <label>Housing ($): <span id="rentVal"></span></label>
       <input type="range" id="rent" min="300" max="5000" value="1500">
       <input type="number" id="rentNum" min="300" max="5000" value="1500">
     </div>
-
     <div class="input-group">
       <label>Food ($): <span id="foodVal"></span></label>
       <input type="range" id="food" min="100" max="2000" value="500">
       <input type="number" id="foodNum" min="100" max="2000" value="500">
     </div>
-
     <div class="input-group">
       <label>Transportation ($): <span id="transportVal"></span></label>
       <input type="range" id="transport" min="0" max="2000" value="300">
       <input type="number" id="transportNum" min="0" max="2000" value="300">
     </div>
-
     <div class="input-group">
       <label>Savings Rate (%): <span id="saveVal"></span></label>
       <input type="range" id="savings" min="0" max="50" value="15">
       <input type="number" id="savingsNum" min="0" max="50" value="15">
     </div>
-
     <div class="input-group">
       <label>Investment Return (%): <span id="returnVal"></span></label>
       <input type="range" id="return" min="0" max="12" value="7">
       <input type="number" id="returnNum" min="0" max="12" value="7">
     </div>
-
     <div class="input-group">
       <label>Inflation (%): <span id="inflationVal"></span></label>
       <input type="range" id="inflation" min="0" max="6" value="2">
       <input type="number" id="inflationNum" min="0" max="6" value="2">
     </div>
+    <button id="saveScenario">💾 Save Scenario</button>
   </div>
 
+  <!-- Dashboard -->
   <div class="dashboard">
     <div class="card" id="healthCard"></div>
     <div class="card" id="emergencyCard"></div>
     <div class="card" id="summaryCard"></div>
   </div>
 
+  <!-- Charts -->
   <div class="charts">
     <div class="chart-card">
       <h3>📈 Net Worth Over Time</h3>
       <canvas id="netWorthChart"></canvas>
     </div>
-
     <div class="chart-card">
       <h3>🥧 Monthly Allocation</h3>
       <canvas id="allocationChart"></canvas>
     </div>
   </div>
 
+  <!-- Scenario List -->
+  <div class="scenarios">
+    <h2>📊 Saved Scenarios</h2>
+    <ul id="scenarioList"></ul>
+  </div>
+
+  <!-- Insights -->
   <div class="insights">
     <h2>💡 Insights</h2>
     <p id="insightText"></p>
   </div>
 
+  <!-- Download -->
   <div class="export">
     <button onclick="downloadPlan()">⬇️ Download Financial Plan</button>
   </div>
