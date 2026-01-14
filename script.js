@@ -99,6 +99,10 @@ function buildNetWorthChart(monthlySavings, r, inflation) {
         y: { title: { display: true, text: "Dollars ($)" } }
       }
     }
+    options: {
+  responsive: true,
+  maintainAspectRatio: false
+}
   });
 }
 
