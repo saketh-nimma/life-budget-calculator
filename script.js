@@ -8,6 +8,14 @@ const savingsEl = document.getElementById("savings");
 const returnEl = document.getElementById("return");
 const inflationEl = document.getElementById("inflation");
 
+const incomeNum = document.getElementById("incomeNum");
+const rentNum = document.getElementById("rentNum");
+const foodNum = document.getElementById("foodNum");
+const transportNum = document.getElementById("transportNum");
+const savingsNum = document.getElementById("savingsNum");
+const returnNum = document.getElementById("returnNum");
+const inflationNum = document.getElementById("inflationNum");
+
 const incomeVal = document.getElementById("incomeVal");
 const rentVal = document.getElementById("rentVal");
 const foodVal = document.getElementById("foodVal");
@@ -25,9 +33,25 @@ const netWorthChart = document.getElementById("netWorthChart");
 const allocationChartCanvas = document.getElementById("allocationChart");
 
 // --- Event Listeners ---
-[incomeEl, rentEl, foodEl, transportEl, savingsEl, returnEl, inflationEl]
-  .forEach(slider => slider.addEventListener("input", update));
+[incomeEl, rentEl, foodEl, transportEl, savingsEl, returnEl, inflationEl,
+ incomeNum, rentNum, foodNum, transportNum, savingsNum, returnNum, inflationNum]
+  .forEach(input => input.addEventListener("input", update));
 
+// --- Sync slider and number inputs ---
+function syncSliderAndNumber(slider, numberInput) {
+  slider.addEventListener("input", () => { numberInput.value = slider.value; update(); });
+  numberInput.addEventListener("input", () => { slider.value = numberInput.value; update(); });
+}
+
+syncSliderAndNumber(incomeEl, incomeNum);
+syncSliderAndNumber(rentEl, rentNum);
+syncSliderAndNumber(foodEl, foodNum);
+syncSliderAndNumber(transportEl, transportNum);
+syncSliderAndNumber(savingsEl, savingsNum);
+syncSliderAndNumber(returnEl, returnNum);
+syncSliderAndNumber(inflationEl, inflationNum);
+
+// --- Main update function ---
 function update() {
   const income = +incomeEl.value;
   const rent = +rentEl.value;
@@ -57,7 +81,7 @@ function update() {
   generateInsight(income, expenses, savings);
 }
 
-// --- Dashboard Functions ---
+// --- Dashboard ---
 function updateHealth(leftover) {
   const score = Math.max(0, Math.min(100, 50 + leftover / 10));
   healthCard.style.background =
@@ -85,7 +109,7 @@ function updateSummary(income, expenses, savings, leftover) {
   `;
 }
 
-// --- Chart Functions ---
+// --- Charts ---
 function buildNetWorthChart(monthlySavings, r, inflation) {
   let total = 0;
   projectionData = [];
@@ -121,9 +145,7 @@ function buildNetWorthChart(monthlySavings, r, inflation) {
         y: { title: { display: true, text: "Dollars ($)" } }
       },
       plugins: {
-        tooltip: {
-          callbacks: { label: ctx => `$${ctx.parsed.y.toLocaleString()}` }
-        }
+        tooltip: { callbacks: { label: ctx => `$${ctx.parsed.y.toLocaleString()}` } }
       }
     }
   });
@@ -141,29 +163,22 @@ function buildAllocationChart(rent, food, transport, savings) {
         backgroundColor: ["#ef4444", "#f59e0b", "#3b82f6", "#16a34a"]
       }]
     },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { position: "bottom" } }
-    }
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "bottom" } } }
   });
 }
 
 // --- Insights ---
 function generateInsight(income, expenses, savings) {
   if (expenses > income * 0.6) {
-    insightText.textContent =
-      "High fixed expenses are limiting growth. Reducing housing has the biggest impact.";
+    insightText.textContent = "High fixed expenses are limiting growth. Reducing housing has the biggest impact.";
   } else if (savings < income * 0.1) {
-    insightText.textContent =
-      "Increasing savings by just 5% dramatically accelerates long-term wealth due to compounding.";
+    insightText.textContent = "Increasing savings by just 5% dramatically accelerates long-term wealth due to compounding.";
   } else {
-    insightText.textContent =
-      "Your financial structure supports stability and long-term growth.";
+    insightText.textContent = "Your financial structure supports stability and long-term growth.";
   }
 }
 
-// --- Download JSON ---
+// --- Download ---
 function downloadPlan() {
   const plan = {
     income: incomeEl.value,
