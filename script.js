@@ -1,3 +1,4 @@
+window.addEventListener("DOMContentLoaded", () => {
 let netChart, allocationChart, projectionData = [];
 let scenarios = [];
 
@@ -47,14 +48,12 @@ function update(){
   const returnRate = ret/100;
   const inflationRate = inflation/100;
 
-  // Update value spans
   valSpans.forEach((span,i)=> span.textContent=inputEls[i].value);
 
   const expenses = rent+food+transport;
   const saveAmount = income*savingsRate;
   const leftover = income-expenses-saveAmount;
 
-  // Dashboard
   updateHealth(leftover);
   updateEmergency(expenses, saveAmount);
   updateSummary(income, expenses, saveAmount, leftover);
@@ -64,7 +63,7 @@ function update(){
   generateInsight(income, expenses, saveAmount);
 }
 
-// --- Dashboard functions ---
+// --- Dashboard ---
 function updateHealth(leftover){
   const score = Math.max(0, Math.min(100, 50+leftover/10));
   healthCard.style.background = score>70?"#dcfce7":score>40?"#fef3c7":"#fee2e2";
@@ -90,6 +89,7 @@ function buildNetWorthChart(monthlySavings, r, inflation){
     projectionData.push(Math.round(total));
   }
   if(netChart) netChart.destroy();
+
   const datasets = scenarios.length>0 ? scenarios.map(s=>({
     label: s.name,
     data: s.projection,
@@ -107,6 +107,7 @@ function buildNetWorthChart(monthlySavings, r, inflation){
     tension:0.35,
     borderWidth:3
   }];
+
   netChart = new Chart(netWorthChart,{type:"line",data:{labels:years,datasets:datasets},options:{responsive:true,maintainAspectRatio:false}});
 }
 
@@ -155,7 +156,6 @@ function updateScenarioList(){
     li.textContent=s.name;
     li.style.borderLeft="6px solid "+s.color;
     li.addEventListener("click",()=>{
-      // Show this scenario in chart only
       netChart.data.datasets=[{label:s.name,data:s.projection,borderColor:s.color,backgroundColor:s.color+"33",fill:true,tension:0.35,borderWidth:3}];
       netChart.update();
     });
@@ -175,3 +175,4 @@ function downloadPlan(){
 
 // --- Initialize ---
 update();
+});
