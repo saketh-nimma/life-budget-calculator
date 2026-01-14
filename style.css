@@ -1,11 +1,11 @@
 body {
   background: linear-gradient(135deg, #eef2ff, #e0f2fe);
-  font-family: 'Poppins', sans-serif;
+  font-family: system-ui, sans-serif;
   margin: 0;
 }
 
 .container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 40px auto;
   background: white;
   padding: 40px;
@@ -16,79 +16,69 @@ body {
 h1 {
   text-align: center;
   color: #1e3a8a;
-  font-size: 2.5rem;
+  font-size: 2.6rem;
 }
 
-p {
+.subtitle {
   text-align: center;
-  color: #374151;
-  font-size: 1.1rem;
+  color: #475569;
+  margin-bottom: 30px;
 }
 
 .inputs label {
   display: block;
   margin-top: 18px;
   font-weight: 600;
-  color: #1f2937;
 }
 
 input[type=range] {
   width: 100%;
-  margin-top: 8px;
   accent-color: #2563eb;
 }
 
-.results {
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
   margin-top: 30px;
-  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
-  padding: 25px;
-  border-radius: 16px;
-  font-size: 1.05rem;
 }
 
-#budgetChart {
+.card {
+  padding: 20px;
+  border-radius: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+
+canvas {
   margin-top: 35px;
   padding: 20px;
   background: #f8fafc;
   border-radius: 16px;
 }
 
-.about {
-  margin-top: 35px;
-  background: #e0f2fe;
+.insights {
+  margin-top: 40px;
   padding: 25px;
+  background: linear-gradient(135deg, #ecfeff, #f0fdf4);
   border-radius: 16px;
-  color: #1e3a8a;
-}
-.chart-controls {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 20px;
 }
 
-.chart-controls button {
-  padding: 10px 16px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  background: #2563eb;
-  color: white;
-  font-weight: 600;
-}
-
-.charts {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 25px;
+.export {
   margin-top: 30px;
-}
-
-.warning {
-  margin-top: 20px;
-  padding: 15px;
-  border-radius: 12px;
-  font-weight: 600;
   text-align: center;
 }
 
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1e40af;
+}
