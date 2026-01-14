@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Life Budget Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h1>💸 Life Budget Lab</h1>
+  <p>Simulate real-life financial decisions and see how your money grows.</p>
+
+  <div class="inputs">
+    <label>💼 Monthly Income ($) <span id="incomeVal">4000</span></label>
+    <input type="range" id="income" min="1000" max="10000" value="4000">
+
+    <label>🏠 Rent ($) <span id="rentVal">1200</span></label>
+    <input type="range" id="rent" min="300" max="4000" value="1200">
+
+    <label>🍔 Food ($) <span id="foodVal">400</span></label>
+    <input type="range" id="food" min="100" max="1500" value="400">
+
+    <label>🚗 Transportation ($) <span id="transportVal">300</span></label>
+    <input type="range" id="transport" min="0" max="1500" value="300">
+
+    <label>💰 Savings Rate (%) <span id="saveVal">15</span></label>
+    <input type="range" id="savings" min="0" max="50" value="15">
+  </div>
+
+  <div class="results">
+    <h2>📊 Monthly Summary</h2>
+    <div id="summary"></div>
+  </div>
+
+  <canvas id="budgetChart"></canvas>
+
+  <div class="about">
+    <h3>How It Works</h3>
+    <p>This simulator models income, expenses, and savings to show how small financial choices impact long-term outcomes.</p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
