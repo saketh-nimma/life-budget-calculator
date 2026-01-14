@@ -11,10 +11,8 @@
 <body>
 <div class="container">
 
-  <h1>📊 Personal Finance Simulator</h1>
-  <p class="subtitle">
-    Adjust real-life financial decisions and instantly see how they shape long-term outcomes.
-  </p>
+  <h1>💼 Personal Finance Simulator</h1>
+  <p class="subtitle">Adjust your financial decisions and instantly see long-term outcomes.</p>
 
   <div class="inputs">
     <label>Monthly Income ($): <span id="incomeVal"></span></label>
@@ -24,7 +22,7 @@
     <input type="range" id="rent" min="300" max="5000" value="1500">
 
     <label>Food ($): <span id="foodVal"></span></label>
-    <input type="range" id="food" min="200" max="2000" value="500">
+    <input type="range" id="food" min="100" max="2000" value="500">
 
     <label>Transportation ($): <span id="transportVal"></span></label>
     <input type="range" id="transport" min="0" max="2000" value="300">
@@ -46,17 +44,16 @@
   </div>
 
   <div class="charts">
-  <div class="chart-card">
-    <h3>📈 Net Worth Over Time</h3>
-    <canvas id="netWorthChart"></canvas>
-  </div>
+    <div class="chart-card">
+      <h3>📈 Net Worth Over Time</h3>
+      <canvas id="netWorthChart"></canvas>
+    </div>
 
-  <div class="chart-card">
-    <h3>🥧 Monthly Allocation</h3>
-    <canvas id="allocationChart"></canvas>
+    <div class="chart-card">
+      <h3>🥧 Monthly Allocation</h3>
+      <canvas id="allocationChart"></canvas>
+    </div>
   </div>
-</div>
-
 
   <div class="insights">
     <h2>💡 Insights</h2>
