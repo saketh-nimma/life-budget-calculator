@@ -1,5 +1,6 @@
 let netChart, allocationChart, projectionData = [];
 
+// --- Slider elements ---
 const incomeEl = document.getElementById("income");
 const rentEl = document.getElementById("rent");
 const foodEl = document.getElementById("food");
@@ -8,6 +9,7 @@ const savingsEl = document.getElementById("savings");
 const returnEl = document.getElementById("return");
 const inflationEl = document.getElementById("inflation");
 
+// --- Number input elements ---
 const incomeNum = document.getElementById("incomeNum");
 const rentNum = document.getElementById("rentNum");
 const foodNum = document.getElementById("foodNum");
@@ -16,6 +18,7 @@ const savingsNum = document.getElementById("savingsNum");
 const returnNum = document.getElementById("returnNum");
 const inflationNum = document.getElementById("inflationNum");
 
+// --- Display spans ---
 const incomeVal = document.getElementById("incomeVal");
 const rentVal = document.getElementById("rentVal");
 const foodVal = document.getElementById("foodVal");
@@ -24,25 +27,36 @@ const saveVal = document.getElementById("saveVal");
 const returnVal = document.getElementById("returnVal");
 const inflationVal = document.getElementById("inflationVal");
 
+// --- Dashboard cards ---
 const healthCard = document.getElementById("healthCard");
 const emergencyCard = document.getElementById("emergencyCard");
 const summaryCard = document.getElementById("summaryCard");
 const insightText = document.getElementById("insightText");
 
+// --- Chart canvases ---
 const netWorthChart = document.getElementById("netWorthChart");
 const allocationChartCanvas = document.getElementById("allocationChart");
 
-// --- Event Listeners ---
-[incomeEl, rentEl, foodEl, transportEl, savingsEl, returnEl, inflationEl,
- incomeNum, rentNum, foodNum, transportNum, savingsNum, returnNum, inflationNum]
-  .forEach(input => input.addEventListener("input", update));
-
-// --- Sync slider and number inputs ---
+// --- Sync sliders and number inputs ---
 function syncSliderAndNumber(slider, numberInput) {
-  slider.addEventListener("input", () => { numberInput.value = slider.value; update(); });
-  numberInput.addEventListener("input", () => { slider.value = numberInput.value; update(); });
+  // Slider -> number
+  slider.addEventListener("input", () => {
+    numberInput.value = slider.value;
+    update();
+  });
+
+  // Number -> slider
+  numberInput.addEventListener("input", () => {
+    let val = Number(numberInput.value);
+    if (val < Number(slider.min)) val = Number(slider.min);
+    if (val > Number(slider.max)) val = Number(slider.max);
+    numberInput.value = val;
+    slider.value = val;
+    update();
+  });
 }
 
+// Apply sync to all input pairs
 syncSliderAndNumber(incomeEl, incomeNum);
 syncSliderAndNumber(rentEl, rentNum);
 syncSliderAndNumber(foodEl, foodNum);
@@ -163,7 +177,11 @@ function buildAllocationChart(rent, food, transport, savings) {
         backgroundColor: ["#ef4444", "#f59e0b", "#3b82f6", "#16a34a"]
       }]
     },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "bottom" } } }
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom" } }
+    }
   });
 }
 
