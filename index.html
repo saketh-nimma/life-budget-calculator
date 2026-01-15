@@ -12,17 +12,18 @@
 <div class="app">
   <h1>Personal Finance Simulator</h1>
   <p class="subtitle">
-    Compare two financial scenarios and download the results.
+    Compare two financial scenarios and download your results.
   </p>
 
+  <!-- Scenario Controls -->
   <div class="panel">
     <h2>Scenario Inputs</h2>
-
     <div class="scenario-toggle">
       <button onclick="setScenario('A')" id="btnA">Scenario A</button>
       <button onclick="setScenario('B')" id="btnB">Scenario B</button>
     </div>
 
+    <!-- Inputs -->
     <div class="input-row">
       <label>Monthly Income ($)</label>
       <input type="range" id="incomeRange" min="1000" max="12000">
@@ -51,9 +52,10 @@
     <button class="download-btn" onclick="downloadCSV()">Download Results</button>
   </div>
 
+  <!-- Charts -->
   <div class="charts">
     <div class="chart-box">
-      <h3>Net Worth Comparison (30 Years)</h3>
+      <h3>Net Worth Over 30 Years</h3>
       <div class="chart-wrapper">
         <canvas id="netChart"></canvas>
       </div>
