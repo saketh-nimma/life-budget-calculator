@@ -6,68 +6,68 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="style.css">
-
-  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
 <div class="app">
   <h1>Personal Finance Simulator</h1>
-  <p class="subtitle">Adjust the sliders to see how your financial future changes.</p>
+  <p class="subtitle">
+    Compare two financial scenarios and download results for personal analysis.
+  </p>
 
-  <!-- INPUTS -->
   <div class="panel">
-    <h2>Inputs</h2>
+    <h2>Scenario Inputs</h2>
+
+    <div class="scenario-toggle">
+      <button onclick="setScenario('A')" id="btnA">Scenario A</button>
+      <button onclick="setScenario('B')" id="btnB">Scenario B</button>
+    </div>
 
     <div class="input-row">
       <label>Monthly Income ($)</label>
-      <input type="range" id="incomeRange" min="1000" max="10000" value="4500">
-      <input type="number" id="incomeNum" value="4500">
+      <input type="range" id="incomeRange" min="1000" max="12000">
+      <input type="number" id="incomeNum">
     </div>
 
     <div class="input-row">
       <label>Monthly Expenses ($)</label>
-      <input type="range" id="expenseRange" min="500" max="8000" value="2500">
-      <input type="number" id="expenseNum" value="2500">
+      <input type="range" id="expenseRange" min="500" max="9000">
+      <input type="number" id="expenseNum">
     </div>
 
     <div class="input-row">
       <label>Savings Rate (%)</label>
-      <input type="range" id="savingsRange" min="0" max="50" value="20">
-      <input type="number" id="savingsNum" value="20">
+      <input type="range" id="savingsRange" min="0" max="50">
+      <input type="number" id="savingsNum">
     </div>
 
     <div class="input-row">
       <label>Annual Return (%)</label>
-      <input type="range" id="returnRange" min="0" max="12" value="7">
-      <input type="number" id="returnNum" value="7">
+      <input type="range" id="returnRange" min="0" max="12">
+      <input type="number" id="returnNum">
     </div>
+
+    <button class="save-btn" onclick="saveScenario()">Save Scenario</button>
+    <button class="download-btn" onclick="downloadCSV()">Download Results</button>
   </div>
 
-  <!-- SUMMARY -->
-  <div class="summary">
-    <h2>Summary</h2>
-    <p id="summaryText"></p>
-  </div>
-
-  <!-- CHARTS -->
   <div class="charts">
-  <div class="chart-box">
-    <h3>Net Worth Projection (30 Years)</h3>
-    <div class="chart-wrapper">
-      <canvas id="netWorthChart"></canvas>
+    <div class="chart-box">
+      <h3>Net Worth Comparison (30 Years)</h3>
+      <div class="chart-wrapper">
+        <canvas id="netChart"></canvas>
+      </div>
     </div>
-  </div>
 
-  <div class="chart-box">
-    <h3>Monthly Allocation</h3>
-    <div class="chart-wrapper">
-      <canvas id="allocationChart"></canvas>
+    <div class="chart-box">
+      <h3>Monthly Allocation</h3>
+      <div class="chart-wrapper">
+        <canvas id="allocationChart"></canvas>
+      </div>
     </div>
   </div>
 </div>
-
 
 <script src="script.js"></script>
 </body>
