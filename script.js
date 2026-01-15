@@ -4,45 +4,41 @@ let netChart = null;
 let allocationChart = null;
 
 window.addEventListener("DOMContentLoaded", () => {
-  // Grab canvas elements AFTER DOM is loaded
   const netChartCanvas = document.getElementById("netChart");
   const allocationChartCanvas = document.getElementById("allocationChart");
 
-  // Sync inputs
+  // Sync sliders + inputs
   ["income", "expense", "savings", "return"].forEach(id => {
-    syncInputs(id);
-  });
-
-  setScenario("A");
-
-  function syncInputs(id) {
     const range = document.getElementById(id + "Range");
     const num = document.getElementById(id + "Num");
     const defaultVal = { income: 4500, expense: 2500, savings: 20, return: 7 }[id];
     range.value = num.value = defaultVal;
 
-    range.addEventListener("input", () => {
-      num.value = range.value;
-      updateCharts();
-    });
+    range.addEventListener("input", () => { num.value = range.value; updateCharts(); });
+    num.addEventListener("input", () => { range.value = num.value; updateCharts(); });
+  });
 
-    num.addEventListener("input", () => {
-      range.value = num.value;
-      updateCharts();
-    });
-  }
+  setScenario("A");
+
+  window.setScenario = setScenario;
+  window.saveScenario = saveScenario;
+  window.downloadCSV = downloadCSV;
 
   function setScenario(s) {
     currentScenario = s;
     document.getElementById("btnA").classList.toggle("active", s === "A");
     document.getElementById("btnB").classList.toggle("active", s === "B");
-
     if (scenarios[s]) loadScenario(s);
     updateCharts();
   }
 
   function saveScenario() {
-    scenarios[currentScenario] = getInputs();
+    scenarios[currentScenario] = {
+      income: +incomeNum.value,
+      expense: +expenseNum.value,
+      savings: +savingsNum.value,
+      return: +returnNum.value
+    };
     alert(`Scenario ${currentScenario} saved!`);
     updateCharts();
   }
@@ -53,15 +49,6 @@ window.addEventListener("DOMContentLoaded", () => {
     expenseNum.value = expenseRange.value = d.expense;
     savingsNum.value = savingsRange.value = d.savings;
     returnNum.value = returnRange.value = d.return;
-  }
-
-  function getInputs() {
-    return {
-      income: +incomeNum.value,
-      expense: +expenseNum.value,
-      savings: +savingsNum.value,
-      return: +returnNum.value
-    };
   }
 
   function calculateNetWorth(d) {
@@ -85,18 +72,8 @@ window.addEventListener("DOMContentLoaded", () => {
       data: {
         labels: years,
         datasets: [
-          scenarios.A && {
-            label: "Scenario A",
-            data: calculateNetWorth(scenarios.A),
-            borderColor: "#2563eb",
-            fill: false
-          },
-          scenarios.B && {
-            label: "Scenario B",
-            data: calculateNetWorth(scenarios.B),
-            borderColor: "#16a34a",
-            fill: false
-          }
+          scenarios.A && { label: "Scenario A", data: calculateNetWorth(scenarios.A), borderColor: "#2563eb", fill: false },
+          scenarios.B && { label: "Scenario B", data: calculateNetWorth(scenarios.B), borderColor: "#16a34a", fill: false }
         ].filter(Boolean)
       },
       options: { responsive: true, maintainAspectRatio: false }
@@ -110,19 +87,14 @@ window.addEventListener("DOMContentLoaded", () => {
         type: "doughnut",
         data: {
           labels: ["Expenses", "Savings"],
-          datasets: [{
-            data: [d.expense, d.income * d.savings / 100],
-            backgroundColor: ["#ef4444", "#16a34a"]
-          }]
+          datasets: [{ data: [d.expense, d.income * d.savings / 100], backgroundColor: ["#ef4444", "#16a34a"] }]
         },
         options: { responsive: true, maintainAspectRatio: false }
       });
     }
   }
 
-  window.saveScenario = saveScenario;
-  window.setScenario = setScenario;
-  window.downloadCSV = function() {
+  function downloadCSV() {
     let csv = "Scenario,Income,Expenses,Savings %,Return %\n";
     ["A","B"].forEach(s => {
       if (scenarios[s]) {
@@ -135,5 +107,5 @@ window.addEventListener("DOMContentLoaded", () => {
     a.href = URL.createObjectURL(blob);
     a.download = "finance_comparison.csv";
     a.click();
-  };
+  }
 });
