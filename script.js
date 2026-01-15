@@ -1,65 +1,92 @@
-let lineChart = null;
+let netChart = null;
 let pieChart = null;
 
-document.getElementById("calculateBtn").addEventListener("click", calculate);
+// Wait until page + Chart.js load
+window.onload = () => {
+  syncInputs("incomeRange", "incomeNum");
+  syncInputs("expenseRange", "expenseNum");
+  syncInputs("savingsRange", "savingsNum");
+  syncInputs("returnRange", "returnNum");
 
-function calculate() {
-  const income = Number(document.getElementById("income").value);
-  const expenses = Number(document.getElementById("expenses").value);
-  const savingsRate = Number(document.getElementById("savingsRate").value) / 100;
-  const returnRate = Number(document.getElementById("returnRate").value) / 100;
+  updateSimulation();
+};
+
+// Sync slider <-> number input
+function syncInputs(rangeId, numId) {
+  const range = document.getElementById(rangeId);
+  const num = document.getElementById(numId);
+
+  range.addEventListener("input", () => {
+    num.value = range.value;
+    updateSimulation();
+  });
+
+  num.addEventListener("input", () => {
+    range.value = num.value;
+    updateSimulation();
+  });
+}
+
+function updateSimulation() {
+  const income = Number(document.getElementById("incomeNum").value);
+  const expenses = Number(document.getElementById("expenseNum").value);
+  const savingsRate = Number(document.getElementById("savingsNum").value) / 100;
+  const returnRate = Number(document.getElementById("returnNum").value) / 100;
 
   const monthlySavings = income * savingsRate;
   const yearlySavings = monthlySavings * 12;
 
-  // Summary
   document.getElementById("summaryText").innerHTML = `
-    Monthly Savings: $${monthlySavings.toFixed(0)}<br>
-    Yearly Savings: $${yearlySavings.toFixed(0)}<br>
-    Remaining After Expenses: $${(income - expenses - monthlySavings).toFixed(0)}
+    Monthly Savings: <strong>$${monthlySavings.toFixed(0)}</strong><br>
+    Yearly Savings: <strong>$${yearlySavings.toFixed(0)}</strong><br>
+    Remaining Income: <strong>$${(income - expenses - monthlySavings).toFixed(0)}</strong>
   `;
 
-  buildLineChart(yearlySavings, returnRate);
-  buildPieChart(expenses, monthlySavings);
+  drawNetWorthChart(yearlySavings, returnRate);
+  drawAllocationChart(expenses, monthlySavings);
 }
 
-function buildLineChart(yearlySavings, returnRate) {
-  const years = [];
-  const netWorth = [];
-
+function drawNetWorthChart(yearlySavings, returnRate) {
+  let years = [];
+  let values = [];
   let total = 0;
+
   for (let i = 1; i <= 30; i++) {
     total = total * (1 + returnRate) + yearlySavings;
     years.push(i);
-    netWorth.push(Math.round(total));
+    values.push(Math.round(total));
   }
 
-  if (lineChart) lineChart.destroy();
+  if (netChart) netChart.destroy();
 
-  lineChart = new Chart(document.getElementById("lineChart"), {
+  netChart = new Chart(document.getElementById("netWorthChart"), {
     type: "line",
     data: {
       labels: years,
       datasets: [{
         label: "Net Worth ($)",
-        data: netWorth,
+        data: values,
         borderColor: "#2563eb",
         backgroundColor: "rgba(37,99,235,0.25)",
         fill: true,
-        tension: 0.3
+        tension: 0.35
       }]
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false
+      maintainAspectRatio: false,
+      animation: {
+        duration: 800,
+        easing: "easeOutQuart"
+      }
     }
   });
 }
 
-function buildPieChart(expenses, savings) {
+function drawAllocationChart(expenses, savings) {
   if (pieChart) pieChart.destroy();
 
-  pieChart = new Chart(document.getElementById("pieChart"), {
+  pieChart = new Chart(document.getElementById("allocationChart"), {
     type: "doughnut",
     data: {
       labels: ["Expenses", "Savings"],
@@ -71,12 +98,13 @@ function buildPieChart(expenses, savings) {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      animation: {
+        duration: 800,
+        easing: "easeOutQuart"
+      },
       plugins: {
         legend: { position: "bottom" }
       }
     }
   });
 }
-
-// Initial render
-calculate();
