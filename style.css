@@ -25,68 +25,47 @@ h1 {
 .subtitle {
   text-align: center;
   color: #475569;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
-.panel {
-  margin-bottom: 30px;
-}
-
-.panel h2 {
+.panel h2,
+.summary h2 {
   margin-bottom: 10px;
 }
 
-label {
-  display: block;
-  margin-top: 12px;
-  font-weight: 600;
-}
-
-input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  font-size: 16px;
-}
-
-button {
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 10px;
+  align-items: center;
   margin-top: 15px;
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  background: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
 }
 
-button:hover {
-  background: #1e40af;
+input[type="range"] {
+  width: 100%;
+}
+
+input[type="number"] {
+  padding: 6px;
+  font-size: 15px;
 }
 
 .summary {
+  margin-top: 30px;
   background: #f8fafc;
   padding: 20px;
   border-radius: 16px;
-  font-size: 1.05rem;
 }
 
 .charts {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 25px;
+  margin-top: 30px;
 }
 
 .chart-box {
   background: #f8fafc;
-  padding: 20px;
+  padding: 15px;
   border-radius: 16px;
-  height: 350px;
-  display: flex;
-  flex-direction: column;
-}
-
-.chart-box canvas {
-  flex: 1;
 }
