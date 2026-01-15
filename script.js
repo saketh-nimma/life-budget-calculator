@@ -3,6 +3,10 @@ let scenarios = { A: null, B: null };
 let netChart = null;
 let allocationChart = null;
 
+const netChartCanvas = document.getElementById("netChart");
+const allocationChartCanvas = document.getElementById("allocationChart");
+
+
 window.onload = () => {
   ["income", "expense", "savings", "return"].forEach(id => {
     syncInputs(id);
@@ -125,4 +129,7 @@ function downloadCSV() {
   a.href = URL.createObjectURL(blob);
   a.download = "finance_comparison.csv";
   a.click();
+}
+if (netChartCanvas && allocationChartCanvas) {
+  updateCharts();
 }
