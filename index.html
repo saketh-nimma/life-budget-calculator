@@ -2,41 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Finance Simulator</title>
+  <title>Personal Finance Simulator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
 
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="app">
   <h1>Personal Finance Simulator</h1>
-  <p class="subtitle">Explore how income, spending, and saving affect your future.</p>
+  <p class="subtitle">Adjust the sliders to see how your financial future changes.</p>
 
   <!-- INPUTS -->
   <div class="panel">
     <h2>Inputs</h2>
 
-    <label>Monthly Income ($)</label>
-    <input type="number" id="income" value="4500">
+    <div class="input-row">
+      <label>Monthly Income ($)</label>
+      <input type="range" id="incomeRange" min="1000" max="10000" value="4500">
+      <input type="number" id="incomeNum" value="4500">
+    </div>
 
-    <label>Monthly Expenses ($)</label>
-    <input type="number" id="expenses" value="2500">
+    <div class="input-row">
+      <label>Monthly Expenses ($)</label>
+      <input type="range" id="expenseRange" min="500" max="8000" value="2500">
+      <input type="number" id="expenseNum" value="2500">
+    </div>
 
-    <label>Savings Rate (%)</label>
-    <input type="number" id="savingsRate" value="20">
+    <div class="input-row">
+      <label>Savings Rate (%)</label>
+      <input type="range" id="savingsRange" min="0" max="50" value="20">
+      <input type="number" id="savingsNum" value="20">
+    </div>
 
-    <label>Annual Investment Return (%)</label>
-    <input type="number" id="returnRate" value="7">
-
-    <button id="calculateBtn">Calculate</button>
+    <div class="input-row">
+      <label>Annual Return (%)</label>
+      <input type="range" id="returnRange" min="0" max="12" value="7">
+      <input type="number" id="returnNum" value="7">
+    </div>
   </div>
 
   <!-- SUMMARY -->
-  <div class="panel summary">
+  <div class="summary">
     <h2>Summary</h2>
     <p id="summaryText"></p>
   </div>
@@ -44,13 +54,13 @@
   <!-- CHARTS -->
   <div class="charts">
     <div class="chart-box">
-      <h3>Net Worth Over Time</h3>
-      <canvas id="lineChart"></canvas>
+      <h3>Net Worth Over 30 Years</h3>
+      <canvas id="netWorthChart" height="260"></canvas>
     </div>
 
     <div class="chart-box">
       <h3>Monthly Allocation</h3>
-      <canvas id="pieChart"></canvas>
+      <canvas id="allocationChart" height="260"></canvas>
     </div>
   </div>
 </div>
